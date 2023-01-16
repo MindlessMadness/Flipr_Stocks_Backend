@@ -21,7 +21,7 @@ app.get('/daterange/:name/:date1/:date2',(req, res)=>{
     const date2=req.params.date2;
     m.find({Date:{
         $gte: date1,
-        $lte: date2}}).then((doc)=>{
+        $lte: date2}}).then((doc)=> {
             console.log(doc);
         res.status(200).send(doc);
     },(err)=>{
@@ -35,13 +35,13 @@ app.get('/over/:name/:date1/:date2/:sc',(req, res)=>{
     const sc=req.params.sc;
     m.find({Date:{
         $gte: date1,
-        $lte: date2}}).sort(sc==-1?{High : sc}:{Low : sc}).limit(1).then((doc)=>{
+        $lte: date2}}).sort({Open : sc}).limit(1).then((doc)=>{
             console.log(doc);
         res.status(200).send(doc[0]);
     },(err)=>{
         res.status(400).send({"error":err});
     });
 });
-app.listen(60900,  ()=>{
+app.listen(process.env.PORT || 60900,  ()=>{
     console.log("server connected on port 60900.");
 });
